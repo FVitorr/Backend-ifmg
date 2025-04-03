@@ -1,5 +1,7 @@
 package com.example.demo.entities;
 
+import com.example.demo.dtos.CategoriaDTO;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,6 +25,7 @@ public class Categoria {
 
     public Categoria(){};
     
+
     public Long getId() {
         return id;
     }

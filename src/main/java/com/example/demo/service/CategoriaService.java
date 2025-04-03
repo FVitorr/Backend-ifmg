@@ -29,7 +29,14 @@ public class CategoriaService {
     @Transactional(readOnly = true)
     public CategoriaDTO findById(Long id){
         Optional<Categoria> obj = categoriaRepository.findById(id);
-        Categoria categoria = obj.orElseThrow(() -> new ResourceNotFound("Dados não encontrado"));
+        Categoria categoria = obj.orElseThrow(() -> new ResourceNotFound("Categoria não encontrada"));
         return new CategoriaDTO(categoria);
+    }
+
+    @Transactional
+    public CategoriaDTO insert(CategoriaDTO dto) {
+        Categoria entity = new Categoria();
+        entity.setName(dto.getName());
+        return new CategoriaDTO(categoriaRepository.save(entity));
     }
 }
