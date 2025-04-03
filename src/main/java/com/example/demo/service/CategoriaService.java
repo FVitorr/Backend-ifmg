@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.example.demo.entities.Categoria;
 import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.service.exceptions.ResourceNotFound;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import com.example.demo.dtos.CategoriaDTO;
 
 
@@ -38,5 +41,17 @@ public class CategoriaService {
         Categoria entity = new Categoria();
         entity.setName(dto.getName());
         return new CategoriaDTO(categoriaRepository.save(entity));
+    }
+
+    @Transactional
+    public CategoriaDTO update(Long id, CategoriaDTO dto) {
+        try{
+            Categoria entity = categoriaRepository.getReferenceById(id);
+            entity.setName(dto.getName());
+            return new CategoriaDTO(categoriaRepository.save(entity));
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFound("Categoria não encontrada");
+        }
+
     }
 }
