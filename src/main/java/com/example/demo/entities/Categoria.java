@@ -1,12 +1,18 @@
 package com.example.demo.entities;
 
+import java.security.PublicKey;
+import java.time.Instant;
+
 import com.example.demo.dtos.CategoriaDTO;
 
 import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 
 @Entity
@@ -16,6 +22,13 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(columnDefinition = "TIMESSTAMP WITHOUT TIME ZONE")
+    private Instant createdAt;
+
+    @Column(columnDefinition = "TIMESSTAMP WITHOUT TIME ZONE")
+    private Instant updateAt;
+
     
 
     public Categoria(Long id, String name) {
@@ -42,6 +55,31 @@ public class Categoria {
         this.name = name;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(Instant updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    @PrePersist
+    private void prePersist(){
+        createdAt = Instant.now();
+    }
+
+    @PreUpdate
+    private void preUpdate(){
+        updateAt = Instant.now();
+    }
 
     @Override
     public int hashCode() {

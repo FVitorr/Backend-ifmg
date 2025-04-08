@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,5 +54,17 @@ public class CategoriaService {
             throw new ResourceNotFound("Categoria não encontrada");
         }
 
+    }
+
+    @Transactional
+    public void delete(Long id){
+        if (!categoriaRepository.existsById(id)){
+            throw new ResourceNotFound("Categoria não encontrada");
+        }
+        try{
+            categoriaRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new ResourceNotFound("Integration violation");
+        }
     }
 }
