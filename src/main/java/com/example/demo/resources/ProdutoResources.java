@@ -21,9 +21,33 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.example.demo.dtos.CategoriaDTO;
+import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.service.CategoriaService;
+import com.example.demo.service.ProdutoService;
 
 @RestController
-@RequestMapping(value = "/categoria")
+@RequestMapping(value = "/produto")
 public class ProdutoResources {
+
+    @Autowired 
+    private ProdutoService produtoService;
+
+    @GetMapping
+    public ResponseEntity<Page<ProdutoDTO>> findAll(Pageable pageable){
+        return ResponseEntity.ok( produtoService.findAll(pageable));
+    }
+
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok( produtoService.findById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity<ProdutoDTO> insert (@RequestBody ProdutoDTO dto){
+        dto = produtoService.insertProduto(dto);
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
 }
