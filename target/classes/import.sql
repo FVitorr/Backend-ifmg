@@ -1,10 +1,10 @@
 
 CREATE TABLE tb_produto_categoria  (
-    product_id INT NOT NULL,
-    category_id INT NOT NULL,
-    PRIMARY KEY (product_id, category_id),
-    FOREIGN KEY (product_id) REFERENCES tb_produto(id),
-    FOREIGN KEY (category_id) REFERENCES tb_categoria(id)
+    produto_id INT NOT NULL,
+    categoria_id INT NOT NULL,
+    PRIMARY KEY (produto_id, categoria_id),
+    FOREIGN KEY (produto_id) REFERENCES tb_produto(id),
+    FOREIGN KEY (categoria_id) REFERENCES tb_categoria(id)
 );
 
 
@@ -38,29 +38,29 @@ INSERT INTO tb_produto (name, price, created_at, description, imageUrl) VALUES (
 INSERT INTO tb_produto (name, price, created_at, description, imageUrl) VALUES ('PC Gamer Boo', 2350.0, TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/24-big.jpg');
 INSERT INTO tb_produto (name, price, created_at, description, imageUrl) VALUES ('PC Gamer Foo', 4170.0, TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'https://raw.githubusercontent.com/devsuperior/dscatalog-resources/master/backend/img/25-big.jpg');
 
-INSERT INTO tb_produto_categoria (product_id, category_id) VALUES (1, 2);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (2, 1);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (2, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (3, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (4, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (5, 2);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (6, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (7, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (8, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (9, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (10, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (11, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (12, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (13, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (14, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (15, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (16, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (17, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (18, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (19, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (20, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (21, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (22, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (23, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (24, 3);
-INSERT INTO tb_produto_categoria  (product_id, category_id) VALUES (25, 3);
+INSERT INTO tb_produto_categoria (produto_id, categoria_id) VALUES (1, 2);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (2, 1);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (2, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (3, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (4, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (5, 2);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (6, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (7, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (8, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (9, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (10, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (11, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (12, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (13, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (14, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (15, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (16, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (17, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (18, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (19, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (20, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (21, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (22, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (23, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (24, 3);
+INSERT INTO tb_produto_categoria  (produto_id, categoria_id) VALUES (25, 3);
