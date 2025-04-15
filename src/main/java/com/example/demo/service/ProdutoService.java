@@ -1,8 +1,7 @@
 package com.example.demo.service;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -13,13 +12,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Produto;
-import com.example.demo.repository.CategoriaRepository;
 import com.example.demo.service.exceptions.ResourceNotFound;
 
 import jakarta.persistence.EntityNotFoundException;
 
 import com.example.demo.repository.ProdutoRepository;
-import com.example.demo.dtos.CategoriaDTO;
 import com.example.demo.dtos.ProdutoDTO;
 
 
@@ -83,10 +80,11 @@ public class ProdutoService {
 
 
     private void copyDtoToEntity(ProdutoDTO dto, Produto entity){
-        entity.setNome(dto.getNome());
-        entity.setDescricao(dto.getDescricao());
+        entity.setName(dto.getNome());
+        entity.setDescription(dto.getDescricao());
         entity.setPrice(dto.getPrice());
         entity.setImageUrl(dto.getImageUrl());
+        dto.getCategorias().forEach(c->entity.getCategorias().add(new Categoria(c)));
     }
 
 }

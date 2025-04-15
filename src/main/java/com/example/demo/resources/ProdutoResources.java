@@ -50,4 +50,19 @@ public class ProdutoResources {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, 
+    @RequestBody ProdutoDTO dto ){
+        dto = produtoService.update(id, dto);
+        return ResponseEntity.ok().body(dto);
+    }
+
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete (@PathVariable Long id){
+        produtoService.delete(id);
+        return ResponseEntity.noContent().build();
+
+    }
 }

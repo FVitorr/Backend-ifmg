@@ -33,8 +33,8 @@ public class ProdutoDTO {
 
     public ProdutoDTO(Produto entity){
         this.id = entity.getId();
-        this.nome = entity.getNome();
-        this.descricao = entity.getDescricao();
+        this.nome = entity.getName();
+        this.descricao = entity.getDescription();
         this.price=entity.getPrice();
         this.imageUrl = entity.getImageUrl();
 

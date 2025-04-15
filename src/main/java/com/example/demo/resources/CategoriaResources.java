@@ -1,7 +1,6 @@
 package com.example.demo.resources;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,10 +29,10 @@ public class CategoriaResources {
     @Autowired
     private CategoriaService categoriaService;
 
-    @GetMapping
-    public ResponseEntity<List<CategoriaDTO>> findAll(){
-        return ResponseEntity.ok().body(categoriaService.findAll());
-    }
+    // @GetMapping
+    // public ResponseEntity<List<CategoriaDTO>> findAll(){
+    //     return ResponseEntity.ok().body(categoriaService.findAll());
+    // }
 
     @GetMapping
     public ResponseEntity<Page<CategoriaDTO>> findAll(  @RequestParam(value = "page", defaultValue = "0") Integer page,

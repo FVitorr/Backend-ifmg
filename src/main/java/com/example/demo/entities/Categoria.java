@@ -23,13 +23,12 @@ public class Categoria {
     private Long id;
     private String name;
 
-    @Column(columnDefinition = "TIMESSTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant createdAt;
 
-    @Column(columnDefinition = "TIMESSTAMP WITHOUT TIME ZONE")
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateAt;
 
-    
 
     public Categoria(Long id, String name) {
         this.id = id;
@@ -38,6 +37,11 @@ public class Categoria {
 
     public Categoria(){};
     
+
+    public Categoria(CategoriaDTO dto) {
+        this.id = dto.getId();
+        this.name = dto.getName();
+    }
 
     public Long getId() {
         return id;

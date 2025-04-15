@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,8 +24,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String nome;
-    private String descricao;
+    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String description;
     private double price;
     private String imageUrl;
     private Instant createdAt;
@@ -40,18 +42,18 @@ public class Produto {
     public Produto(){}
 
     
-    public Produto(Long id, String nome, String descricao, double price, String imageUrl) {
+    public Produto(Long id, String name, String description, double price, String imageUrl) {
         this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
+        this.name = name;
+        this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
     }
 
     public Produto(Produto entity){
         this.id = entity.getId();
-        this.nome = entity.getNome();
-        this.descricao = entity.getDescricao();
+        this.name = entity.getName();
+        this.description = entity.getDescription();
         this.price=entity.getPrice();
         this.imageUrl = entity.getImageUrl();
     }
@@ -69,20 +71,20 @@ public class Produto {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public double getPrice() {
