@@ -1,0 +1,15 @@
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/DemoApplication.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/config/OpenApiConfig.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/dtos/CategoriaDTO.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/dtos/ProdutoDTO.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/entities/Categoria.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/entities/Produto.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/repository/CategoriaRepository.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/repository/ProdutoRepository.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/resources/CategoriaResources.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/resources/ProdutoResources.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/resources/exception/ResourceExceptionListener.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/resources/exception/StandartErro.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/service/CategoriaService.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/service/ProdutoService.java
+/home/alunos/Documentos/demo/src/main/java/com/example/demo/service/exceptions/ResourceNotFound.java

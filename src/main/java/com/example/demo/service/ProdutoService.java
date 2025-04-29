@@ -2,13 +2,15 @@ package com.example.demo.service;
 
 import java.util.Optional;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Produto;
@@ -17,6 +19,7 @@ import com.example.demo.service.exceptions.ResourceNotFound;
 import jakarta.persistence.EntityNotFoundException;
 
 import com.example.demo.repository.ProdutoRepository;
+import com.example.demo.resources.ProdutoResources;
 import com.example.demo.dtos.ProdutoDTO;
 
 
@@ -30,7 +33,9 @@ public class ProdutoService {
     public Page<ProdutoDTO> findAll(Pageable pageable){
         Page<Produto> produtos = ProdutoRepository.findAll(pageable);
 
-        return produtos.map(p -> new ProdutoDTO(p));
+        return produtos.map(product -> new ProdutoDTO(product)
+        .add(linkTo(methodOn(ProdutoResources.class).findAll(null)).withSelfRel())
+        .add(linkTo(methodOn(ProdutoResources.class).findById(product.getId())).withSelfRel("Get a product")));
     }
 
 
@@ -38,7 +43,11 @@ public class ProdutoService {
     public ProdutoDTO findById(Long id){
         Optional<Produto> obj = ProdutoRepository.findById(id);
         Produto entity = obj.orElseThrow(() -> new ResourceNotFound("Produto não encontrado"));
-        return new ProdutoDTO(entity);
+        return new ProdutoDTO(entity)
+             .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withSelfRel())
+             .add( linkTo(methodOn(ProdutoResources.class).findAll(null)).withRel("All products"))
+             .add( linkTo(methodOn(ProdutoResources.class).update(entity.getId(),null)).withRel("Update product"))
+             .add( linkTo(methodOn(ProdutoResources.class).delete(entity.getId())).withRel("Delete product"));
     }
     
     @Transactional
@@ -48,7 +57,11 @@ public class ProdutoService {
 
         entity = ProdutoRepository.save(entity);
 
-        return new ProdutoDTO(entity);
+        return new ProdutoDTO(entity)
+             .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withRel("Get a product"))
+             .add( linkTo(methodOn(ProdutoResources.class).findAll(null)).withRel("All products"))
+             .add( linkTo(methodOn(ProdutoResources.class).update(entity.getId(),null)).withRel("Update product"))
+             .add( linkTo(methodOn(ProdutoResources.class).delete(entity.getId())).withRel("Delete product"));
     }
 
 
@@ -57,7 +70,13 @@ public class ProdutoService {
         try{
             Produto entity = ProdutoRepository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
-            return new ProdutoDTO(ProdutoRepository.save(entity));
+            entity = ProdutoRepository.save(entity);
+
+            return new ProdutoDTO(entity)
+                .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withRel("Get a product"))
+                .add( linkTo(methodOn(ProdutoResources.class).findAll(null)).withRel("All products"))
+                .add( linkTo(methodOn(ProdutoResources.class).update(entity.getId(),null)).withRel("Update product"))
+                .add( linkTo(methodOn(ProdutoResources.class).delete(entity.getId())).withRel("Delete product"));
         }catch (EntityNotFoundException e){
             throw new ResourceNotFound("Categoria não encontrada");
         }

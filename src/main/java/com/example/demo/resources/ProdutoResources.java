@@ -25,25 +25,56 @@ import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.service.CategoriaService;
 import com.example.demo.service.ProdutoService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping(value = "/produto")
+@Tag(name = "Product", description = "Controller/Resource for products")
 public class ProdutoResources {
 
     @Autowired 
     private ProdutoService produtoService;
 
-    @GetMapping
+    @GetMapping(produces = "aplication/json")
+    @Operation(
+        description = "Get all products",
+        summary = "Get all products",
+        response = {
+            @ApiResponse(description = "ok", responseCode = "200")
+        }
+    )
     public ResponseEntity<Page<ProdutoDTO>> findAll(Pageable pageable){
         return ResponseEntity.ok( produtoService.findAll(pageable));
     }
 
 
     @GetMapping(value = "/{id}")
+    @Operation(
+        description = "Get a product",
+        summary = "Get a product",
+        response = {
+            @ApiResponse(description = "ok", responseCode = "200"),
+            @ApiResponse(description = "not found", responseCode = "404")
+        }
+    )
     public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok( produtoService.findById(id));
     }
 
     @PostMapping
+    @Operation(
+        description = "Create a product",
+        summary = "Create  a product",
+        responses = {
+            @ApiResponse(description = "ok", responseCode = "200"),
+            @ApiResponse(description = "bad resquest", responseCode = "400"),
+            @ApiResponse(description = "unautorized", responseCode = "401"),
+            @ApiResponse(description = "forbiden", responseCode = "403"),
+            @ApiResponse(description = "not found", responseCode = "404"),
+        }
+    )
     public ResponseEntity<ProdutoDTO> insert (@RequestBody ProdutoDTO dto){
         dto = produtoService.insertProduto(dto);
 
@@ -52,6 +83,17 @@ public class ProdutoResources {
     }
 
     @PutMapping(value = "/{id}")
+    @Operation(
+        description = "update a product",
+        summary = "update a product",
+        responses = {
+            @ApiResponse(description = "ok", responseCode = "200"),
+            @ApiResponse(description = "bad resquest", responseCode = "400"),
+            @ApiResponse(description = "unautorized", responseCode = "401"),
+            @ApiResponse(description = "forbiden", responseCode = "403"),
+            @ApiResponse(description = "not found", responseCode = "404"),
+        }
+    )
     public ResponseEntity<ProdutoDTO> update(@PathVariable Long id, 
     @RequestBody ProdutoDTO dto ){
         dto = produtoService.update(id, dto);
@@ -60,6 +102,17 @@ public class ProdutoResources {
 
 
     @DeleteMapping(value = "/{id}")
+    @Operation(
+        description = "delete a product",
+        summary = "delete a product",
+        responses = {
+            @ApiResponse(description = "ok", responseCode = "200"),
+            @ApiResponse(description = "bad resquest", responseCode = "400"),
+            @ApiResponse(description = "unautorized", responseCode = "401"),
+            @ApiResponse(description = "forbiden", responseCode = "403"),
+            @ApiResponse(description = "not found", responseCode = "404"),
+        }
+    )
     public ResponseEntity<Void> delete (@PathVariable Long id){
         produtoService.delete(id);
         return ResponseEntity.noContent().build();

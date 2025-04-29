@@ -4,20 +4,40 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.hateoas.RepresentationModel;
+
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Produto;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-public class ProdutoDTO {
 
+@Entity
+@Table(name ="tb_product")
+public class ProdutoDTO extends RepresentationModel<ProdutoDTO> {
+    
+    @Schema(description = "Database generated Id product")
+ 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Schema(description = "Product name")
     private String nome;
+    @Schema(description = "Detailed description of the product")
     private String descricao;
+    @Schema(description = "Product price")
     private double price;
+    @Schema(description = "Product URL of image")
     private String imageUrl;
     private Instant createdAt;
     private Instant updateAt;
 
+    @Schema(description = "Product categories (one or more)")
     private Set<CategoriaDTO> categorias = new HashSet<>();
 
     public ProdutoDTO(){}
@@ -46,14 +66,6 @@ public class ProdutoDTO {
         categorias.forEach(c ->
             this.categorias.add(new CategoriaDTO(c))
         );
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getNome() {
