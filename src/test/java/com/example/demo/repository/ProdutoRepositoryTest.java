@@ -21,7 +21,6 @@ public class ProdutoRepositoryTest {
     public void deleteShoudDeleteObjectWhenIdExists(){
         produtoRepository.deleteById(1L);
         Optional<Produto> obj = produtoRepository.findById(1l);
-        
         Assertions.assertFalse(obj.isPresent());
     }
 }
