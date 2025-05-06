@@ -35,7 +35,7 @@ public class ProdutoService {
 
         return produtos.map(product -> new ProdutoDTO(product)
         .add(linkTo(methodOn(ProdutoResources.class).findAll(null)).withSelfRel())
-        .add(linkTo(methodOn(ProdutoResources.class).findById(product.getId())).withSelfRel("Get a product")));
+        .add(linkTo(methodOn(ProdutoResources.class).findById(product.getId())).withRel("Get a product")));
     }
 
 

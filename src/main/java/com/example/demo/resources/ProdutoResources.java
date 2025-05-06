@@ -37,11 +37,11 @@ public class ProdutoResources {
     @Autowired 
     private ProdutoService produtoService;
 
-    @GetMapping(produces = "aplication/json")
+    @GetMapping(produces = "application/json")
     @Operation(
         description = "Get all products",
         summary = "Get all products",
-        response = {
+        responses = {
             @ApiResponse(description = "ok", responseCode = "200")
         }
     )
@@ -54,7 +54,7 @@ public class ProdutoResources {
     @Operation(
         description = "Get a product",
         summary = "Get a product",
-        response = {
+        responses = {
             @ApiResponse(description = "ok", responseCode = "200"),
             @ApiResponse(description = "not found", responseCode = "404")
         }
