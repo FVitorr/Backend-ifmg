@@ -9,23 +9,12 @@ import org.springframework.hateoas.RepresentationModel;
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Produto;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 
-@Entity
-@Table(name ="tb_product")
 public class ProdutoDTO extends RepresentationModel<ProdutoDTO> {
     
     @Schema(description = "Database generated Id product")
- 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Schema(description = "Product name")
     private String nome;
     @Schema(description = "Detailed description of the product")
@@ -66,6 +55,10 @@ public class ProdutoDTO extends RepresentationModel<ProdutoDTO> {
         categorias.forEach(c ->
             this.categorias.add(new CategoriaDTO(c))
         );
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public Long getId(){
