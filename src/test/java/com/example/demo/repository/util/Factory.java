@@ -11,7 +11,7 @@ public class Factory {
         p.setName("Iphone");
         p.setPrice(1000);
         p.setImageUrl("aaa");
-        p.getCategorias().add(new Categoria(60L, "News")); 
+        p.getCategorias().add(new Categoria(1L, "Livros")); 
         
         return p; 
     }
