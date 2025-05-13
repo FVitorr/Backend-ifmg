@@ -1,14 +1,18 @@
 package com.example.demo.entities;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.example.demo.dtos.CategoriaDTO;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -27,6 +31,8 @@ public class Categoria {
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant updateAt;
 
+    @ManyToMany(mappedBy = "categorias", fetch = FetchType.LAZY)
+    private Set<Produto> produtos = new HashSet<>();
 
     public Categoria(Long id, String name) {
         this.id = id;
@@ -73,6 +79,8 @@ public class Categoria {
         this.updateAt = updateAt;
     }
 
+    
+
     @PrePersist
     private void prePersist(){
         createdAt = Instant.now();
@@ -111,6 +119,14 @@ public class Categoria {
     @Override
     public String toString() {
         return "Categoria [id=" + id + ", name=" + name + "]";
+    }
+
+    public Set<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(Set<Produto> produtos) {
+        this.produtos = produtos;
     }
     
 }
