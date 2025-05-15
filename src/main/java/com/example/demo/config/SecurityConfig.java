@@ -12,7 +12,7 @@ public class SecurityConfig {
     
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) {
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests( authorize -> 
             authorize.requestMatchers("/**").permitAll()
             .anyRequest().authenticated()
