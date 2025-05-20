@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,6 +16,9 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name="tb_produto")
@@ -24,9 +28,12 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Schema(description = "Nome do Produto")
+    @Size(min = 3, max = 255, message = "Dever ter entre 3 e 255 caracteres")
     private String name;
     @Column(columnDefinition = "TEXT")
     private String description;
+    @Positive(message = "Preço deve ser positivo")
     private double price;
     private String imageUrl;
     private Instant createdAt;
@@ -37,6 +44,7 @@ public class Produto {
         name="tb_produto_categoria", 
         joinColumns = @JoinColumn(name="produto_id"),
         inverseJoinColumns = @JoinColumn(name="categoria_id"))
+        @NotEmpty(message = "Produto dever ter ao menos uma categoria")
     private Set<Categoria> categorias = new HashSet<>();
 
     public Produto(){}

@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.example.demo.dtos.ProdutoDTO;
-import com.example.demo.service.ProdutoService;
+import com.example.demo.dtos.UserDTO;
+import com.example.demo.dtos.UserInsertDTO;
+import com.example.demo.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -26,12 +27,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping(value = "/produto")
-@Tag(name = "Product", description = "Controller/Resource for products")
-public class ProdutoResources {
+@RequestMapping(value = "/user")
+@Tag(name = "user", description = "Controller/Resource for user")
+public class UserResources {
 
     @Autowired 
-    private ProdutoService produtoService;
+    private UserService userService;
 
     @GetMapping(produces = "application/json")
     @Operation(
@@ -41,8 +42,8 @@ public class ProdutoResources {
             @ApiResponse(description = "ok", responseCode = "200")
         }
     )
-    public ResponseEntity<Page<ProdutoDTO>> findAll(Pageable pageable){
-        return ResponseEntity.ok( produtoService.findAll(pageable));
+    public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable){
+        return ResponseEntity.ok( userService.findAll(pageable));
     }
 
 
@@ -55,8 +56,8 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404")
         }
     )
-    public ResponseEntity<ProdutoDTO> findById(@PathVariable Long id){
-        return ResponseEntity.ok( produtoService.findById(id));
+    public ResponseEntity<UserDTO> findById(@PathVariable Long id){
+        return ResponseEntity.ok( userService.findById(id));
     }
 
     @PostMapping
@@ -71,11 +72,11 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
-    public ResponseEntity<ProdutoDTO> insert (@Valid @RequestBody ProdutoDTO dto){
-        dto = produtoService.insertProduto(dto);
+    public ResponseEntity<UserDTO> insert (@Valid @RequestBody UserInsertDTO dto){
+        UserDTO user = userService.insert(dto);
 
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(user);
     }
 
     @PutMapping(value = "/{id}")
@@ -90,9 +91,9 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
-    public ResponseEntity<ProdutoDTO> update(@Valid @PathVariable Long id, 
-    @RequestBody ProdutoDTO dto ){
-        dto = produtoService.update(id, dto);
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, 
+    @RequestBody UserDTO dto ){
+        dto = userService.update(id, dto);
         return ResponseEntity.ok().body(dto);
     }
 
@@ -110,7 +111,7 @@ public class ProdutoResources {
         }
     )
     public ResponseEntity<Void> delete (@PathVariable Long id){
-        produtoService.delete(id);
+        userService.delete(id);
         return ResponseEntity.noContent().build();
 
     }

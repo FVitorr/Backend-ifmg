@@ -1,13 +1,20 @@
 package com.example.demo.service;
 
+import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.dtos.RoleDTO;
 import com.example.demo.dtos.UserDTO;
 import com.example.demo.dtos.UserInsertDTO;
+import com.example.demo.entities.Produto;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
+import com.example.demo.repository.ProdutoRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.resources.ProdutoResources;
 import com.example.demo.service.exceptions.ResourceNotFound;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +57,20 @@ public class UserService {
         return new UserDTO(nv);
     }
 
-    private void copyDtoToEntity(UserInsertDTO dto, User entity) {
+    @Transactional
+    public UserDTO update(Long id, UserDTO dto) {
+
+        try{
+            User entity = userRepository.getReferenceById(id);
+            copyDtoToEntity(dto, entity);
+            entity = userRepository.save(entity);
+            return new UserDTO(entity);
+        }catch (EntityNotFoundException e){
+            throw new ResourceNotFound("Usuario não encontrado" + id);
+        }
+    }
+
+    private void copyDtoToEntity(UserDTO dto, User entity) {
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());

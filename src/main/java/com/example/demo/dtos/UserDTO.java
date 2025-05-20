@@ -14,7 +14,7 @@ public class UserDTO {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "campo obrigatorio")
+    @NotBlank(message = "Campo obrigatorio")
     private String firstName;
     private String lastName;
     @Email(message = "Favor informar um e-mail valido")
