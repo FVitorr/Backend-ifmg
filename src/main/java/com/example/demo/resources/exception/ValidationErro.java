@@ -3,8 +3,6 @@ package com.example.demo.resources.exception;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.validation.FieldError;
-
 public class ValidationErro extends StandartErro{
 
     private List<FieldMessage> erros = new ArrayList<FieldMessage>();

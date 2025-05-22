@@ -1,33 +1,32 @@
 package com.example.demo.service;
 
-import com.example.demo.dtos.ProdutoDTO;
-import com.example.demo.dtos.RoleDTO;
-import com.example.demo.dtos.UserDTO;
-import com.example.demo.dtos.UserInsertDTO;
-import com.example.demo.entities.Produto;
-import com.example.demo.entities.Role;
-import com.example.demo.entities.User;
-import com.example.demo.repository.ProdutoRepository;
-import com.example.demo.repository.RoleRepository;
-import com.example.demo.repository.UserRepository;
-import com.example.demo.resources.ProdutoResources;
-import com.example.demo.service.exceptions.ResourceNotFound;
-
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import com.example.demo.dtos.RoleDTO;
+import com.example.demo.dtos.UserDTO;
+import com.example.demo.dtos.UserInsertDTO;
+import com.example.demo.entities.Role;
+import com.example.demo.entities.User;
+import com.example.demo.projections.UserDetailsProjection;
+import com.example.demo.repository.RoleRepository;
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.exceptions.ResourceNotFound;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import jakarta.persistence.EntityNotFoundException;
 
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService{
     
     @Autowired
     public UserRepository userRepository;
@@ -80,6 +79,24 @@ public class UserService {
             Role r =  roleRepository.getReferenceById(role.getId());
             entity.getRoles().add(r);
         }
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        List<UserDetailsProjection> result = userRepository.searchUserAndRoleByEmail(email);
+
+        if (result.size() == 0){
+            throw new UsernameNotFoundException("Usuario not found");
+        }
+
+        User user = new User();
+        user.setEmail(result.get(0).getUsername());
+        user.setPassword(result.get(0).getPassword());
+        for (UserDetailsProjection p: result){
+            user.addRole(new Role(p.getRoleId(),p.getAuthority()));
+        }
+
+        return user;
     }
 
 
