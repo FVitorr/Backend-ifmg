@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,6 +71,7 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLES_ADMIN', 'ROLE_OPERATOR')")
     public ResponseEntity<ProdutoDTO> insert (@Valid @RequestBody ProdutoDTO dto){
         dto = produtoService.insertProduto(dto);
 
@@ -89,6 +91,7 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLES_ADMIN', 'ROLE_OPERATOR')")
     public ResponseEntity<ProdutoDTO> update(@Valid @PathVariable Long id, 
     @RequestBody ProdutoDTO dto ){
         dto = produtoService.update(id, dto);
@@ -108,6 +111,7 @@ public class ProdutoResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLES_ADMIN', 'ROLE_OPERATOR')")
     public ResponseEntity<Void> delete (@PathVariable Long id){
         produtoService.delete(id);
         return ResponseEntity.noContent().build();

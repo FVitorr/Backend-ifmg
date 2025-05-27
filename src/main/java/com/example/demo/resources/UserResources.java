@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,8 +36,8 @@ public class UserResources {
 
     @GetMapping(produces = "application/json")
     @Operation(
-        description = "Get all products",
-        summary = "Get all products",
+        description = "Get all user",
+        summary = "Get all user",
         responses = {
             @ApiResponse(description = "ok", responseCode = "200")
         }
@@ -48,21 +49,22 @@ public class UserResources {
 
     @GetMapping(value = "/{id}")
     @Operation(
-        description = "Get a product",
-        summary = "Get a product",
+        description = "Get a user",
+        summary = "Get a user",
         responses = {
             @ApiResponse(description = "ok", responseCode = "200"),
             @ApiResponse(description = "not found", responseCode = "404")
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLE_ADIMIN')")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id){
         return ResponseEntity.ok( userService.findById(id));
     }
 
     @PostMapping
     @Operation(
-        description = "Create a product",
-        summary = "Create  a product",
+        description = "Create a user",
+        summary = "Create  a user",
         responses = {
             @ApiResponse(description = "ok", responseCode = "200"),
             @ApiResponse(description = "bad resquest", responseCode = "400"),
@@ -71,6 +73,7 @@ public class UserResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLE_ADIMIN')")
     public ResponseEntity<UserDTO> insert (@Valid @RequestBody UserInsertDTO dto){
         UserDTO user = userService.insert(dto);
 
@@ -80,8 +83,8 @@ public class UserResources {
 
     @PutMapping(value = "/{id}")
     @Operation(
-        description = "update a product",
-        summary = "update a product",
+        description = "update a user",
+        summary = "update a user",
         responses = {
             @ApiResponse(description = "ok", responseCode = "200"),
             @ApiResponse(description = "bad resquest", responseCode = "400"),
@@ -90,6 +93,7 @@ public class UserResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLE_ADIMIN')")
     public ResponseEntity<UserDTO> update(@Valid @PathVariable Long id, 
     @RequestBody UserDTO dto ){
         dto = userService.update(id, dto);
@@ -99,8 +103,8 @@ public class UserResources {
 
     @DeleteMapping(value = "/{id}")
     @Operation(
-        description = "delete a product",
-        summary = "delete a product",
+        description = "delete a user",
+        summary = "delete a user",
         responses = {
             @ApiResponse(description = "ok", responseCode = "200"),
             @ApiResponse(description = "bad resquest", responseCode = "400"),
@@ -109,6 +113,7 @@ public class UserResources {
             @ApiResponse(description = "not found", responseCode = "404"),
         }
     )
+    @PreAuthorize("hasAnyAuthority('ROLE_ADIMIN')")
     public ResponseEntity<Void> delete (@PathVariable Long id){
         userService.delete(id);
         return ResponseEntity.noContent().build();

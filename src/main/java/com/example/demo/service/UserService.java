@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import com.example.demo.dtos.UserInsertDTO;
 import com.example.demo.entities.Role;
 import com.example.demo.entities.User;
 import com.example.demo.projections.UserDetailsProjection;
+import com.example.demo.repository.ProdutoRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.exceptions.ResourceNotFound;
@@ -98,6 +100,20 @@ public class UserService implements UserDetailsService{
 
         return user;
     }
+
+
+    @Transactional
+    public void delete(Long id){
+        if (!userRepository.existsById(id)){
+            throw new ResourceNotFound("User não encontrada");
+        }
+        try{
+            userRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            throw new ResourceNotFound("Integration violation");
+        }
+    }
+
 
 
 }
