@@ -20,6 +20,7 @@ import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entities.Produto;
 import com.example.demo.repository.util.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.demo.repository.util;
 
 import org.springframework.http.MediaType;
 import jakarta.transaction.Transactional;
@@ -35,6 +36,13 @@ public class ProcutoResourcesITest {
 
     @Autowired
     private ObjectMapper objectMapper;
+
+
+    @Autowired
+    private TokenUtil TokenUtil;
+    private String userName;
+    private String password;
+    private String token; 
 
     private Long existingId;
     private Long nonExistingId;
@@ -103,10 +111,7 @@ public class ProcutoResourcesITest {
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.id").value(idLong));          
         resultActions.andExpect(jsonPath("$.nome").value(nameExpected));
-    }
-
-    @Test
-    public void deleteShouldReturnNoContentWhenIdExists()throws Exception {
+    }UleteShouldReturnNoContentWhenIdExists()throws Exception {
         ResultActions resultActions = 
             mockMvc.perform(delete("/produto/{id}", existingId));
     
