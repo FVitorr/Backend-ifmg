@@ -1,9 +1,8 @@
 package com.example.demo.dtos;
 
-import com.example.demo.entities.Role;
-import jakarta.persistence.*;
-
 import java.util.Objects;
+
+import com.example.demo.entities.Role;
 
 public class RoleDTO {
 

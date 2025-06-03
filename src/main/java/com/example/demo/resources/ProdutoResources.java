@@ -14,10 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.bind.annotation.*;
+
 
 import com.example.demo.dtos.ProdutoDTO;
+import com.example.demo.dtos.ProdutoListaDTO;
 import com.example.demo.service.ProdutoService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,6 +36,23 @@ public class ProdutoResources {
 
     @Autowired 
     private ProdutoService produtoService;
+
+    @GetMapping(value = "/paged", produces = "application/json")
+    @Operation(
+            description = "Get all products paged",
+            summary = "Get all products paged",
+            responses = {
+                    @ApiResponse(description = "ok", responseCode = "200"),
+            }
+    )
+    public ResponseEntity<Page<ProdutoListaDTO>> findAllPaged(
+            Pageable pageable,
+            @RequestParam(value = "categoryId", defaultValue = "0") String categpryId,
+            @RequestParam(value = "name", defaultValue = "") String name) {
+
+        Page<ProdutoListaDTO> products = produtoService.findAllPaged(name, categpryId, pageable);
+        return ResponseEntity.ok().body(products);
+    }
 
     @GetMapping(produces = "application/json")
     @Operation(

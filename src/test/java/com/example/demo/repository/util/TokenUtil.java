@@ -1,4 +1,4 @@
-package br.edu.ifmg.produto.util;
+package com.example.demo.repository.util;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

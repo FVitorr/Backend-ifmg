@@ -1,10 +1,14 @@
 package com.example.demo.service;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,17 +25,18 @@ import jakarta.persistence.EntityNotFoundException;
 import com.example.demo.repository.ProdutoRepository;
 import com.example.demo.resources.ProdutoResources;
 import com.example.demo.dtos.ProdutoDTO;
+import com.example.demo.dtos.ProdutoListaDTO;
 
 
 @Service
 public class ProdutoService {
     
     @Autowired
-    public ProdutoRepository ProdutoRepository;
+    public ProdutoRepository produtoRepository;
 
     @Transactional(readOnly = true)
     public Page<ProdutoDTO> findAll(Pageable pageable){
-        Page<Produto> produtos = ProdutoRepository.findAll(pageable);
+        Page<Produto> produtos = produtoRepository.findAll(pageable);
 
         return produtos.map(product -> new ProdutoDTO(product)
         .add(linkTo(methodOn(ProdutoResources.class).findAll(null)).withSelfRel())
@@ -41,7 +46,7 @@ public class ProdutoService {
 
     @Transactional(readOnly = true)
     public ProdutoDTO findById(Long id){
-        Optional<Produto> obj = ProdutoRepository.findById(id);
+        Optional<Produto> obj = produtoRepository.findById(id);
         Produto entity = obj.orElseThrow(() -> new ResourceNotFound("Produto não encontrado"));
         return new ProdutoDTO(entity)
              .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withSelfRel())
@@ -55,7 +60,7 @@ public class ProdutoService {
         Produto entity = new Produto();
         copyDtoToEntity(dto, entity);
 
-        entity = ProdutoRepository.save(entity);
+        entity = produtoRepository.save(entity);
 
         return new ProdutoDTO(entity)
              .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withRel("Get a product"))
@@ -68,9 +73,9 @@ public class ProdutoService {
     @Transactional
     public ProdutoDTO update(Long id, ProdutoDTO dto) {
         try{
-            Produto entity = ProdutoRepository.getReferenceById(id);
+            Produto entity = produtoRepository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
-            entity = ProdutoRepository.save(entity);
+            entity = produtoRepository.save(entity);
 
             return new ProdutoDTO(entity)
                 .add( linkTo(methodOn(ProdutoResources.class).findById(entity.getId())).withRel("Get a product"))
@@ -86,11 +91,11 @@ public class ProdutoService {
 
     @Transactional
     public void delete(Long id){
-        if (!ProdutoRepository.existsById(id)){
+        if (!produtoRepository.existsById(id)){
             throw new ResourceNotFound("Produto não encontrada");
         }
         try{
-            ProdutoRepository.deleteById(id);
+            produtoRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
             throw new ResourceNotFound("Integration violation");
         }
@@ -104,6 +109,22 @@ public class ProdutoService {
         entity.setPrice(dto.getPrice());
         entity.setImageUrl(dto.getImageUrl());
         dto.getCategorias().forEach(c->entity.getCategorias().add(new Categoria(c)));
+    }
+
+
+    public Page<ProdutoListaDTO> findAllPaged(String name, String categpryId, Pageable pageable) {
+        List<Long> categoriasId = null;
+
+        if (!categpryId.equals(0)){
+            categoriasId = Arrays.stream(categpryId.split(",")).map(id -> Long.parseLong(id)).toList();
+        }
+
+        Page<ProdutoListaDTO> page = produtoRepository.searchProducts(categoriasId, name, pageable);
+
+        Page<ProdutoListaDTO> dtos = page.stream().map(p -> new ProdutoListaDTO(p)).toList();
+
+        return new PageImpl<>(dtos, pageable, page.getTotalElements());
+
     }
 
 }

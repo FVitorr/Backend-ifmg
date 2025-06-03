@@ -43,8 +43,6 @@ public class UserDTO {
         entity.getRoles().forEach(role -> roles.add(new RoleDTO(role)));
     }
 
-
-
     public Long getId() {
         return id;
     }
@@ -77,13 +75,6 @@ public class UserDTO {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public Set<RoleDTO> getRoles() {
         return roles;
