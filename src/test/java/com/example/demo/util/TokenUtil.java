@@ -1,4 +1,4 @@
-package com.example.demo.repository.util;
+package com.example.demo.util;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;

@@ -1,4 +1,4 @@
-package br.edu.ifmg.produto.config.customgrant;
+package com.example.demo.config.customgrant;
 
 import java.util.Collections;
 import java.util.HashSet;

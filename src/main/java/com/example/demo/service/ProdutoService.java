@@ -18,6 +18,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import com.example.demo.entities.Categoria;
 import com.example.demo.entities.Produto;
+import com.example.demo.projections.ProdutoProjection;
 import com.example.demo.service.exceptions.ResourceNotFound;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -112,16 +113,19 @@ public class ProdutoService {
     }
 
 
-    public Page<ProdutoListaDTO> findAllPaged(String name, String categpryId, Pageable pageable) {
+    public Page<ProdutoListaDTO> findAllPaged(String name, String categoryId, Pageable pageable) {
         List<Long> categoriasId = null;
 
-        if (!categpryId.equals(0)){
-            categoriasId = Arrays.stream(categpryId.split(",")).map(id -> Long.parseLong(id)).toList();
+        if (!categoryId.equals(0)){
+            categoriasId = Arrays.stream(categoryId.split(",")).map(id -> Long.parseLong(id)).toList();
         }
 
-        Page<ProdutoListaDTO> page = produtoRepository.searchProducts(categoriasId, name, pageable);
+        Page<ProdutoProjection> page = categoryId != null ? 
+        produtoRepository.searchProductsWithCategories(categoriasId, name, pageable)
+        :
+        produtoRepository.searchProductsWithoutCategories( name, pageable);
 
-        Page<ProdutoListaDTO> dtos = page.stream().map(p -> new ProdutoListaDTO(p)).toList();
+        List<ProdutoListaDTO> dtos = page.stream().map(p -> new ProdutoListaDTO(p)).toList();
 
         return new PageImpl<>(dtos, pageable, page.getTotalElements());
 

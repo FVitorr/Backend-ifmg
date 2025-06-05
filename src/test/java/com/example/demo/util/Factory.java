@@ -1,4 +1,4 @@
-package com.example.demo.repository.util;
+package com.example.demo.util;
 
 import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entities.Categoria;

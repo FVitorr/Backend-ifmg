@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,8 @@ public class UserService implements UserDetailsService{
     public UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable){
@@ -114,6 +117,18 @@ public class UserService implements UserDetailsService{
         }
     }
 
+
+
+    @Transactional
+    public UserDTO singUp(UserInsertDTO dto){
+        User entity = new User();
+        copyDtoToEntity(dto, entity);
+        Role role = roleRepository.findByAuthrity("ROLE_OPERATOR");
+        entity.getRoles().add(role);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+        User nv = userRepository.save(entity);
+        return new UserDTO(nv);
+    }
 
 
 }

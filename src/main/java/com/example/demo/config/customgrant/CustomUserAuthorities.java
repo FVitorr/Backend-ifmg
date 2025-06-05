@@ -1,4 +1,4 @@
-package br.edu.ifmg.produto.config.customgrant;
+package com.example.demo.config.customgrant;
 
 import java.util.Collection;
 

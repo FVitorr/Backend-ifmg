@@ -1,4 +1,4 @@
-package br.edu.ifmg.produto.config;
+package com.example.demo.config;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -8,9 +8,9 @@ import java.time.Duration;
 import java.util.List;
 import java.util.UUID;
 
-import br.edu.ifmg.produto.config.customgrant.CustomPasswordAuthenticationConverter;
-import br.edu.ifmg.produto.config.customgrant.CustomPasswordAuthenticationProvider;
-import br.edu.ifmg.produto.config.customgrant.CustomUserAuthorities;
+import com.example.demo.config.customgrant.CustomPasswordAuthenticationConverter;
+import com.example.demo.config.customgrant.CustomPasswordAuthenticationProvider;
+import com.example.demo.config.customgrant.CustomUserAuthorities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +19,6 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.OAuth2Token;

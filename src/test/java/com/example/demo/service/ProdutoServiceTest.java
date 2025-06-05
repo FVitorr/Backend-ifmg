@@ -24,8 +24,9 @@ import org.junit.jupiter.api.Assertions;
 import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entities.Produto;
 import com.example.demo.repository.ProdutoRepository;
-import com.example.demo.repository.util.Factory;
 import com.example.demo.service.exceptions.ResourceNotFound;
+import com.example.demo.util.Factory;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 

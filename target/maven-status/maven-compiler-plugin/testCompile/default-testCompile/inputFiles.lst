@@ -1,0 +1,7 @@
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/DemoApplicationTests.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/repository/ProductRepositoryTest.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/resources/ProductResourceIT.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/resources/ProdutoResourcesTest.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/service/ProdutoServiceTest.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/util/Factory.java
+/home/alunos/Documentos/demo/src/test/java/com/example/demo/util/TokenUtil.java

@@ -1,0 +1,7 @@
+com/example/demo/resources/ProductResourceIT.class
+com/example/demo/util/TokenUtil.class
+com/example/demo/service/ProdutoServiceTest.class
+com/example/demo/util/Factory.class
+com/example/demo/resources/ProductResourceTest.class
+com/example/demo/DemoApplicationTests.class
+com/example/demo/repository/ProductRepositoryTest.class

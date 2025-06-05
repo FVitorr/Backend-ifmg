@@ -1,11 +1,9 @@
 package com.example.demo.resources;
 
-
 import com.example.demo.dtos.ProdutoDTO;
 import com.example.demo.entities.Produto;
-import com.example.demo.repository.util.Factory;
-import com.example.demo.repository.util.TokenUtil;
-import com.example.demo.dtos.ProdutoDTO;
+import com.example.demo.util.Factory;
+import com.example.demo.util.TokenUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

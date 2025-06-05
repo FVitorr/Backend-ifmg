@@ -1,4 +1,4 @@
-package br.edu.ifmg.produto.config;
+package com.example.demo.config;
 
 import java.util.Arrays;
 
