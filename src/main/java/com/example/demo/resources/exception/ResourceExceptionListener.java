@@ -2,6 +2,7 @@ package com.example.demo.resources.exception;
 
 import java.time.Instant;
 
+import com.example.demo.service.exceptions.EmailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -45,6 +46,21 @@ public class  ResourceExceptionListener {
         for (FieldError f : ex.getBindingResult().getFieldErrors()){
             error.addFieldMessage(f.getField(),f.getDefaultMessage());
         }
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+
+    @ExceptionHandler(EmailException.class)
+    public ResponseEntity<ValidationErro> emailException(MethodArgumentNotValidException ex, HttpServletRequest request){
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ValidationErro error = new ValidationErro();
+
+        error.setStatus(status.value());
+        error.setMessage(ex.getMessage());
+        error.setError("Email error");
+        error.setTimestamp(Instant.now());
+        error.setPath(request.getRequestURI());
 
         return ResponseEntity.status(status).body(error);
     }

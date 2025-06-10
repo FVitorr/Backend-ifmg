@@ -123,7 +123,7 @@ public class UserService implements UserDetailsService{
     public UserDTO singUp(UserInsertDTO dto){
         User entity = new User();
         copyDtoToEntity(dto, entity);
-        Role role = roleRepository.findByAuthrity("ROLE_OPERATOR");
+        Role role = roleRepository.findByAuthority("ROLE_OPERATOR");
         entity.getRoles().add(role);
         entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         User nv = userRepository.save(entity);

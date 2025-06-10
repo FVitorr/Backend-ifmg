@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.demo.service.exceptions.DatabaseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -75,7 +76,7 @@ public class CategoriaService {
         try{
             categoriaRepository.deleteById(id);
         }catch (DataIntegrityViolationException e){
-            throw new ResourceNotFound("Integration violation");
+            throw new DatabaseException("Integration violation");
         }
     }
 }
