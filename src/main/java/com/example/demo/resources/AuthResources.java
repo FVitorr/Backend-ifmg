@@ -1,5 +1,6 @@
 package com.example.demo.resources;
 
+import com.example.demo.dtos.NewPasswordDTO;
 import com.example.demo.dtos.RequestTokenDTO;
 import com.example.demo.service.AuthService;
 import jakarta.validation.Valid;
@@ -22,9 +23,10 @@ public class AuthResources {
         return  ResponseEntity.noContent().build();
     }
 
-    @PostMapping(value="new-password")
-    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody RequestTokenDTO dto){
+    @PostMapping(value = "new-password")
+    public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDTO dto) {
         authService.saveNewPassword(dto);
-        return  ResponseEntity.noContent().build();
+        return ResponseEntity.noContent().build();
     }
+
 }
